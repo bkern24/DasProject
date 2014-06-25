@@ -1,0 +1,96 @@
+﻿<job id="main">	
+	<script language="VBScript">
+        Dim basicInfo
+        Dim basicEffects
+        Dim effect1
+        Dim effect2
+        Dim default
+
+		Set objDlg = WScript.CreateObject("Shell.Application")
+        Set objF = objDlg.BrowseForFolder(0,"Select Folder Containing Excel Table CSV",&H0001,0)
+        name = objF.ParentFolder.ParseName(objF.Title).Path
+        If IsValue(objF) Then 
+            MsgBox "Selected folder: " & name
+        Else
+            MsgBox "Canceled"
+        End If
+
+        default = InputBox("Default File Names?","SQL Creation","Default")
+        MsgBox(default)
+
+        If StrComp(default,"default",1) = 0 Then
+            
+            basicInfo = "BasicInfo.csv"
+            basicEffects = "BasicEffects.csv"
+            effect1 = "Effect1.csv"
+            effect2 = "Effect2.csv"    
+
+        Else
+
+            basicInfo = InputBox("Enter name of BasicInfo","SQL Creation","BasicInfo.csv") 
+
+            basicEffects = InputBox("Enter name of BasicEffects","SQL Creation","BasicEffects.csv") 
+
+            effect1 = InputBox("Enter name of Effect1","SQL Creation","Effect1.csv") 
+
+            effect2 = InputBox("Enter name of Effect2","SQL Creation","Effect2.csv") 
+
+        End If
+
+        basicInfo = name & "\" & basicInfo
+        basicEffects = name & "\" & basicEffects
+        effect1 = name & "\" & effect1
+        effect2 = name & "\" & effect2
+
+        MsgBox ("You entered: " & basicInfo)
+
+        SQLCreation(basicInfo)
+
+
+
+        Function IsValue(obj)
+            Dim tmp
+            On Error Resume Next
+            tmp = " " & obj
+            If Err <> 0 Then
+                IsValue = False
+            Else
+                IsValue = True
+            End If
+            On Error GoTo 0
+        End Function
+
+        Function SQLCreation(path)
+            
+            Dim line1Array
+            arrayLine1 = True
+            Set tmpProg = CreateObject("Scripting.FileSystemObject")
+            Set tmpFile = tmpProg.OpenTextFile(path,1)
+            
+            Do Until tmpFile.AtEndOfStream    
+
+                Line = Split(tmpFile.ReadLine, ",")
+                ptr = 0
+                'Save Line1 Headers for later use
+                If arrayLine1 Then
+                    arrayLine1 = False
+                    Redim line1Array(UBound(Line) + 1)  
+                    Do Until ptr >  UBound(Line)
+                        line1Array(ptr) = Line(ptr)
+                        ptr = ptr + 1
+                    Loop
+                Else
+          '          Do Until ptr >  UBound(Line)
+           '         MsgBox(Line(ptr))
+            '        ptr = ptr + 1
+             '       Loop
+                End If
+            
+            Loop
+
+            MsgBox(line1Array(3))
+            tmpFile.Close
+
+        End Function
+	</script>
+</job>
