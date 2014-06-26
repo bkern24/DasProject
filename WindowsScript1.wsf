@@ -8,14 +8,23 @@
 
 		Set objDlg = WScript.CreateObject("Shell.Application")
         Set objF = objDlg.BrowseForFolder(0,"Select Folder Containing Excel Table CSV",&H0001,0)
-        name = objF.ParentFolder.ParseName(objF.Title).Path
+        path = objF.ParentFolder.ParseName(objF.Title).Path
         If IsValue(objF) Then 
-            MsgBox "Selected folder: " & name
+            MsgBox "Selected folder: " & path
         Else
             MsgBox "Canceled"
         End If
 
-        default = InputBox("Default File Names?","SQL Creation","Default")
+        Set objDlg = WScript.CreateObject("Shell.Application")
+        Set objF = objDlg.BrowseForFolder(0,"Select Folder Containing Mysql",&H0001,0)
+        sqlpath = objF.ParentFolder.ParseName(objF.Title).Path
+        If IsValue(objF) Then 
+            MsgBox "Selected folder: " & sqlpath
+        Else
+            MsgBox "Canceled"
+        End If
+
+        default = InputBox("Default File paths?","SQL Creation","Default")
         MsgBox(default)
 
         If StrComp(default,"default",1) = 0 Then
@@ -37,10 +46,10 @@
 
         End If
 
-        basicInfo = name & "\" & basicInfo
-        basicEffects = name & "\" & basicEffects
-        effect1 = name & "\" & effect1
-        effect2 = name & "\" & effect2
+        basicInfo = path & "\" & basicInfo
+        basicEffects = path & "\" & basicEffects
+        effect1 = path & "\" & effect1
+        effect2 = path & "\" & effect2
 
         MsgBox ("You entered: " & basicInfo)
 
@@ -87,7 +96,12 @@
                 End If
             
             Loop
-
+            
+            
+            dim sql, cmd, signIn , oExec
+            signIn = "mysql -u root mysql"
+            Set cmd = WScript.CreateObject("WScript.shell")
+            cmd.Run  "cmd.exe /C" & sqlpath & " && " & signIn & "&& SHOW TABLES;"
             MsgBox(line1Array(3))
             tmpFile.Close
 
