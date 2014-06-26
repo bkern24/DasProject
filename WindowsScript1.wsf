@@ -15,14 +15,16 @@
             MsgBox "Canceled"
         End If
 
-        Set objDlg = WScript.CreateObject("Shell.Application")
-        Set objF = objDlg.BrowseForFolder(0,"Select Folder Containing Mysql",&H0001,0)
-        sqlpath = objF.ParentFolder.ParseName(objF.Title).Path
-        If IsValue(objF) Then 
-            MsgBox "Selected folder: " & sqlpath
-        Else
-            MsgBox "Canceled"
-        End If
+      '  Set objDlg = WScript.CreateObject("Shell.Application")
+     '   Set objF = objDlg.BrowseForFolder(0,"Select Folder Containing Mysql",&H0001,0)
+     '   sqlpath = objF.ParentFolder.ParseName(objF.Title).Path
+     '   If IsValue(objF) Then 
+     '       MsgBox "Selected folder: " & sqlpath
+     '   Else
+     '       MsgBox "Canceled"
+    '    End If
+
+        sqlpath ="E:\wamp\bin\mysql\mysql5.6.17\bin"
 
         default = InputBox("Default File paths?","SQL Creation","Default")
         MsgBox(default)
@@ -99,9 +101,38 @@
             
             
             dim sql, cmd, signIn , oExec
-            signIn = "mysql -u root mysql"
-            Set cmd = WScript.CreateObject("WScript.shell")
-            cmd.Run  "cmd.exe /C" & sqlpath & " && " & signIn & "&& SHOW TABLES;"
+           ' signIn = "mysql -u root mysql"
+         '   Set cmd = WScript.CreateObject("WScript.shell")
+         '   cmd.Run  "cmd.exe /C" & sqlpath 
+           ' WScript.Echo  "/C " & sqlpath
+         '   WScript.Echo signIn
+         '   Dim WshShell, oExec
+           ' Set cmd = WScript.CreateObject("WScript.Shell")
+          '  WshShell.Run "cmd.exe /C" & sqlpath & " && " & signIn & " && SHOW TABLES;",1,false
+           ' cmd.Run "cmd.exe /C" & sqlpath & " && " & signIn & " && CREATE TABLE tutorials_tbl(tutorial_id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY ( tutorial_id )); ",0,True
+            Set oCn = CreateObject("ADODB.Connection")
+         '   Set oRs = CreateObject("ADODB.Recordset")
+
+            ConnectionString = "Driver={MySQL ODBC 5.1 Driver};Data Source=root;SERVER=localhost;" & _
+              "DATABASE=mysql;" & _
+              "USER=root;" & _
+              "PASSWORD=;"
+
+            oCn.open(ConnectionString)
+            'Open your connection
+
+            sql = "CREATE TABLE IF NOT EXISTS Test (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id));"
+          '  Sql= "INSERT INTO 'test' ('name', 'date', 'hour') VALUES ('987654321', '2010-10-10', '17:12:02')"
+
+            oCN.Execute Sql
+
+            'Inser the field
+            
+            oCn.close()  
+          '  oRs.close()
+             
+
+
             MsgBox(line1Array(3))
             tmpFile.Close
 
