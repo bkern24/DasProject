@@ -55,7 +55,10 @@
 
         MsgBox ("You entered: " & basicInfo)
 
-        SQLCreation(basicInfo)
+        SQLCreation(basicInfo,"basicInfo")
+        SQLCreation(basicEffects,"basicEffects")
+        SQLCreation(effect1,"effect1")
+        SQLCreation(effect2,"effect2")
 
 
 
@@ -71,47 +74,17 @@
             On Error GoTo 0
         End Function
 
-        Function SQLCreation(path)
+        Function SQLCreation(path,name)
             
-            Dim line1Array
+            Dim line1Array, tmpArray, sql, cmd, oExec
+
             arrayLine1 = True
             Set tmpProg = CreateObject("Scripting.FileSystemObject")
             Set tmpFile = tmpProg.OpenTextFile(path,1)
-            
-            Do Until tmpFile.AtEndOfStream    
 
-                Line = Split(tmpFile.ReadLine, ",")
-                ptr = 0
-                'Save Line1 Headers for later use
-                If arrayLine1 Then
-                    arrayLine1 = False
-                    Redim line1Array(UBound(Line) + 1)  
-                    Do Until ptr >  UBound(Line)
-                        line1Array(ptr) = Line(ptr)
-                        ptr = ptr + 1
-                    Loop
-                Else
-          '          Do Until ptr >  UBound(Line)
-           '         MsgBox(Line(ptr))
-            '        ptr = ptr + 1
-             '       Loop
-                End If
-            
-            Loop
-            
-            
-            dim sql, cmd, signIn , oExec
-           ' signIn = "mysql -u root mysql"
-         '   Set cmd = WScript.CreateObject("WScript.shell")
-         '   cmd.Run  "cmd.exe /C" & sqlpath 
-           ' WScript.Echo  "/C " & sqlpath
-         '   WScript.Echo signIn
-         '   Dim WshShell, oExec
-           ' Set cmd = WScript.CreateObject("WScript.Shell")
-          '  WshShell.Run "cmd.exe /C" & sqlpath & " && " & signIn & " && SHOW TABLES;",1,false
-           ' cmd.Run "cmd.exe /C" & sqlpath & " && " & signIn & " && CREATE TABLE tutorials_tbl(tutorial_id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY ( tutorial_id )); ",0,True
+        'Begin Open your connection
             Set oCn = CreateObject("ADODB.Connection")
-         '   Set oRs = CreateObject("ADODB.Recordset")
+           'Set oRs = CreateObject("ADODB.Recordset")
 
             ConnectionString = "Driver={MySQL ODBC 5.1 Driver};Data Source=root;SERVER=localhost;" & _
               "DATABASE=mysql;" & _
@@ -119,23 +92,134 @@
               "PASSWORD=;"
 
             oCn.open(ConnectionString)
-            'Open your connection
-
-            sql = "CREATE TABLE IF NOT EXISTS Test (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id));"
-          '  Sql= "INSERT INTO 'test' ('name', 'date', 'hour') VALUES ('987654321', '2010-10-10', '17:12:02')"
-
-            oCN.Execute Sql
-
-            'Inser the field
+        'End Open your connection  
             
-            oCn.close()  
-          '  oRs.close()
-             
+            Do Until tmpFile.AtEndOfStream    
 
+                Line = Split(tmpFile.ReadLine, ",")
+                ptr = 0
+        'Save Line1 Headers for later use, and create init table
+                If arrayLine1 Then
 
+                    arrayLine1 = False
+                    Redim line1Array(UBound(Line) + 1)  
+                    Do Until ptr >  UBound(Line)
+                        line1Array(ptr) = Line(ptr)
+                        ptr = ptr + 1
+                    Loop
+
+                    sql = CreateTable(line1Array,name)
+                    oCN.Execute Sql
+
+        'Grab rest of the Excel Table and Execute
+                Else
+
+                    Redim tmpArray(UBound(Line) + 1)  
+                    Do Until ptr >  UBound(Line)
+                        tmpArray(ptr) = Line(ptr)
+                        ptr = ptr + 1
+                    Loop
+                    sql = InsertInto(name,line1Array,tmpArray)
+                    oCN.Execute Sql
+
+                End If
+            
+            Loop     
+
+        'Close Connections
             MsgBox(line1Array(3))
+            oCn.close() 
             tmpFile.Close
 
         End Function
+
+
+        Function CreateTable(obj,name)
+
+            Dim sb as new System.Text.StringBuilder()
+            sql = "CREATE TABLE IF NOT EXISTS " & name & "(" & _
+                  "Key INT UNSIGNED NOT NULL AUTO_INCREMENT,"
+            ptr = 0
+
+            Dim value
+            Do Until ptr >  UBound(obj)
+                
+                If StrComp(CStr(obj(ptr)),"Card Name",1) = 0 Then
+                            
+                    value = 60
+
+                ElseIf StrComp(CStr(obj(ptr)),"Attribute 1",1) = 0 Then
+
+                    value = 35
+
+                ElseIf StrComp(CStr(obj(ptr)),"Attribute 2",1) = 0 Then
+
+                    value = 35
+                
+                ElseIf StrComp(CStr(obj(ptr)),"Anime",1) = 0 Then
+
+                    value = 60
+
+                ElseIf StrComp(CStr(obj(ptr)),"Flavour Text",1) = 0 Then
+
+                    value = 255
+
+                Else
+                    
+                    value = 20
+
+                End If
+
+            
+                sql = sb.Append(sql).Append(CStr(obj(ptr))).Append(" CHAR(").Append(CStr(value)).Append("),")
+
+                ptr = ptr + 1
+            Loop
+
+            sql = sb.Append(sql).Append("PRIMARY KEY(Key));")
+            
+            CreateTable = sql
+
+        End Function
+
+        Function InsertInto(name,colObj,dataObj)
+
+            Dim sb as new System.Text.StringBuilder()
+            sql = sb.Append("INSERT INTO '").Append(name).Append("' (")
+            ptr = 0
+            
+            Do Until ptr >  UBound(colObj)
+
+                If ptr = UBound(colObj) Then
+
+                    sql = sb.Append(sql).Append("'").Append(CStr(colObj(ptr))).Append("')");
+
+                Else
+                    sql = sb.Append(sql).Append("'").Append(CStr(colObj(ptr))).Append("',")
+
+                End If
+
+            Loop
+
+            sql = sb.Append(sql).Append(" Values (")
+            ptr = 0
+
+            Do Until ptr >  UBound(dataObj)
+
+                If ptr = UBound(dataObj) Then
+
+                    sql = sb.Append(sql).Append("'").Append(CStr(dataObj(ptr))).Append("');");
+
+                Else
+                    sql = sb.Append(sql).Append("'").Append(CStr(dataObj(ptr))).Append("',")
+
+                End If
+
+            Loop
+
+            InsertInto = sql
+
+        End Function
+
 	</script>
 </job>
