@@ -1,0 +1,262 @@
+﻿<job id="main">	
+	<script language="VBScript">
+
+    'Functions For Later Use
+        Function IsValue(obj)
+            Dim tmp
+            On Error Resume Next
+            tmp = " " & obj
+            If Err <> 0 Then
+                IsValue = False
+            Else
+                IsValue = True
+            End If
+            On Error GoTo 0
+        End Function
+
+        Function SQLCreation(path,name)
+            
+            Dim line1Array, tmpArray, sql, cmd, oExec
+
+            arrayLine1 = True
+            Set tmpProg = CreateObject("Scripting.FileSystemObject")
+            Set tmpFile = tmpProg.OpenTextFile(path,1)
+
+        'Begin Open your connection
+            Set oCn = CreateObject("ADODB.Connection")
+            Set oRs = CreateObject("ADODB.Recordset")
+
+            ConnectionString = "Driver={MySQL ODBC 5.1 Driver};Data Source=root;SERVER=localhost;" & _
+              "DATABASE=mysql;" & _
+              "USER=root;" & _
+              "PASSWORD=;"
+            
+            oCn.open(ConnectionString)
+            oRs.CursorLocation = 3
+            oRs.CursorType = 3
+            oRs.LockType = 4
+            oRs.Open "SELECT table_name " & _
+                     "FROM INFORMATION_SCHEMA.tables " & _
+                     "WHERE table_name = '" & name & "';", oCn
+            
+        'End Open your connection 
+            If oRs.RecordCount > 0 Then
+
+                tableCreated = MsgBox("Table already Created, Delete Table?", vbQuestion + vbYesNo + vbDefaultButton2, "Continue?")
+
+                If tableCreated = vbYes Then
+
+                    oCN.Execute("DROP TABLE " & name & ";")
+            
+                Else
+
+                    Exit Function
+
+                End If
+
+            End If
+
+            Do Until tmpFile.AtEndOfStream    
+
+                Line = Split(tmpFile.ReadLine, ",")
+                ptr = 0
+        'Save Line1 Headers for later use, and create init table
+                If arrayLine1 Then
+
+                    arrayLine1 = False
+                    Redim line1Array(UBound(Line))
+                    Do Until ptr >  UBound(Line)
+                        line1Array(ptr) = Line(ptr)
+                        ptr = ptr + 1
+                    Loop
+
+                    sql = CreateTable(line1Array,name)
+                    oCN.Execute(Sql)
+
+        'Grab rest of the Excel Table and Execute
+                Else
+
+                    Redim tmpArray(UBound(Line))  
+                    Do Until ptr >  UBound(Line)
+                        tmpArray(ptr) = Line(ptr)
+                        ptr = ptr + 1
+                    Loop
+                    sql = InsertInto(name,line1Array,tmpArray)
+                    oCN.Execute(Sql)
+
+                End If
+            
+            Loop     
+
+        'Close Connections
+            oCn.close()
+            tmpFile.Close
+
+        End Function
+
+
+        Function CreateTable(obj,name)
+
+            Dim sql
+            sql = "CREATE TABLE IF NOT EXISTS " & name & "(" & _
+                  "KeyID INT UNSIGNED NOT NULL AUTO_INCREMENT,"
+            ptr = 0
+
+            Dim value
+            Do Until ptr >  UBound(obj)
+                
+                If StrComp(CStr(obj(ptr)),"Card Name",1) = 0 Then
+                            
+                    value = 60
+
+                ElseIf StrComp(CStr(obj(ptr)),"Attribute 1",1) = 0 Then
+
+                    value = 35
+
+                ElseIf StrComp(CStr(obj(ptr)),"Attribute 2",1) = 0 Then
+
+                    value = 35
+                
+                ElseIf StrComp(CStr(obj(ptr)),"Anime",1) = 0 Then
+
+                    value = 60
+
+                ElseIf StrComp(CStr(obj(ptr)),"Flavour Text",1) = 0 Then
+
+                    value = 255
+
+                Else
+                    
+                    value = 20
+
+                End If
+
+                
+                sql = sql & CStr(obj(ptr)) & " CHAR(" & _
+                      CStr(value) & _
+                      "),"
+
+                ptr = ptr + 1
+            Loop
+
+            sql = sql & "PRIMARY KEY(KeyID));"
+            
+            CreateTable = sql
+
+        End Function
+
+        Function InsertInto(name,colObj,dataObj)
+
+            Dim sql
+            sql = "INSERT INTO " & _
+                  name & _
+                  " ("
+            ptr = 0
+            
+            Do Until ptr >  UBound(colObj)
+
+                If ptr = UBound(colObj) Then
+
+                    sql = sql & _
+                          CStr(colObj(ptr)) & _
+                          ")" 
+
+                Else
+
+                    sql = sql & _
+                          CStr(colObj(ptr)) & _
+                          ","
+
+                End If
+
+                ptr = ptr + 1
+
+            Loop
+
+            sql = sql & " Values ("
+            ptr = 0
+
+            Do Until ptr >  UBound(dataObj)
+
+                text = Replace(Replace(dataObj(ptr),"'","''"),chr(34),chr(32))
+
+                If ptr = UBound(dataObj) Then
+
+                    sql = sql & "'" & _
+                          CStr(text) & _
+                          "');"
+
+                Else
+                    sql = sql & "'" & _
+                          CStr(text) & _
+                          "',"
+
+                End If
+
+                ptr = ptr + 1
+
+            Loop
+
+            InsertInto = sql
+
+        End Function
+    'End Functions Functions For Later USe
+
+
+
+        Dim basicInfo
+        Dim basicEffects
+        Dim effect1
+        Dim effect2
+        Dim default
+
+		Set objDlg = WScript.CreateObject("Shell.Application")
+        Set objF = objDlg.BrowseForFolder(0,"Select Folder Containing Excel Table CSV",&H0001,0)
+        path = objF.ParentFolder.ParseName(objF.Title).Path
+        If IsValue(objF) Then 
+            
+        Else
+            MsgBox "Canceled"
+        End If
+
+        Set objDlg = WScript.CreateObject("Shell.Application")
+        Set objF = objDlg.BrowseForFolder(0,"Select Folder Containing Mysql, Default: C:\wamp\bin\mysql\mysql5.6.17\bin",&H0001,0)
+        sqlpath = objF.ParentFolder.ParseName(objF.Title).Path
+        If IsValue(objF) Then 
+            
+        Else
+            MsgBox "Canceled"
+        End If
+
+        default = MsgBox("Default File Names?", vbQuestion + vbYesNo + vbDefaultButton1, "?")
+
+                If default = vbYes Then
+
+                    basicInfo = "BasicInfo.csv"
+                    basicEffects = "BasicEffects.csv"
+                    effect1 = "Effect1.csv"
+                    effect2 = "Effect2.csv" 
+            
+                Else
+
+                    basicInfo = InputBox("Enter name of BasicInfo","SQL Creation","BasicInfo.csv") 
+                    basicEffects = InputBox("Enter name of BasicEffects","SQL Creation","BasicEffects.csv") 
+                    effect1 = InputBox("Enter name of Effect1","SQL Creation","Effect1.csv") 
+                    effect2 = InputBox("Enter name of Effect2","SQL Creation","Effect2.csv") 
+
+                End If
+
+        basicInfo = path & "\" & basicInfo
+        basicEffects = path & "\" & basicEffects
+        effect1 = path & "\" & effect1
+        effect2 = path & "\" & effect2
+
+        SQLCreation basicInfo,"basicInfo"
+        SQLCreation basicEffects,"basicEffects"
+        SQLCreation effect1,"effect1"
+        SQLCreation effect2,"effect2"
+
+        MsgBox "Done"
+
+	</script>
+</job>

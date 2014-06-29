@@ -1,34 +1,34 @@
-Card No.,Card Name,Effect,Effect Indicator 1,Timing,Condition,Condition Indicator 1,Cost,Cost Indicator 1
-BM/S15-001,"Bashful, Nadeko Sengoku",SRCHDKATT,Strange,ATK,CLXA,Cursed Girl,0,
-BM/S15-001S,"Bashful, Nadeko Sengoku",SRCHDKATT,Strange,ATK,CLXA,Cursed Girl,0,
+CardNum,CardName,Effect,EffectIndicator1,Timing,Cond,CondIndicator1,Cost,CostIndicator1
+BM/S15-001,Bashful- Nadeko Sengoku,SRCHDKATT,Strange,ATK,CLXA,Cursed Girl,0,
+BM/S15-001S,Bashful- Nadeko Sengoku,SRCHDKATT,Strange,ATK,CLXA,Cursed Girl,0,
 BM/S15-002,Mayoi Hachikuji,ONEKONECA,2,SUMMON,0,0,0,
 BM/S15-003,Koyomi Araragi on Mother's Day,FIVEALL,1,CONT,0,0,0,
-BM/S15-004,"Wandering Girl, Mayoi Hachikuji",2KPOW,self,CONT,ONSTAGE,Blood,0,
-BM/S15-004S,"Wandering Girl, Mayoi Hachikuji",2KPOW,self,CONT,ONSTAGE,Blood,0,
-BM/S15-005,"Lost Cattle, Mayoi Hachikuji",CHKDK,Climax,SUMMON,0,0,0,
-BM/S15-005R,"Lost Cattle, Mayoi Hachikuji",CHKDK,Climax,SUMMON,0,0,0,
-BM/S15-006,"Girl Lost in the Snail, Mayoi Hachikuji",,,,,,,
-BM/S15-006SP,"Girl Lost in the Snail, Mayoi Hachikuji",,,,,,,
+BM/S15-004,Wandering Girl- Mayoi Hachikuji,2KPOW,self,CONT,ONSTAGE,Blood,0,
+BM/S15-004S,Wandering Girl- Mayoi Hachikuji,2KPOW,self,CONT,ONSTAGE,Blood,0,
+BM/S15-005,Lost Cattle- Mayoi Hachikuji,CHKDK,Climax,SUMMON,0,0,0,
+BM/S15-005R,Lost Cattle- Mayoi Hachikuji,CHKDK,Climax,SUMMON,0,0,0,
+BM/S15-006,Girl Lost in the Snail- Mayoi Hachikuji,,,,,,,
+BM/S15-006SP,Girl Lost in the Snail- Mayoi Hachikuji,,,,,,,
 BM/S15-007,Shinobu Oshino the Vampire,,,,,,,
-BM/S15-008,"Enthusiastic Girl, Nadeko Sengoku",,,,,,,
-BM/S15-009,"Wreck of a Former Vampire, Shinobu Oshino",,,,,,,
-BM/S15-010,"Shy Girl, Nadeko Sengoku",,,,,,,
-BM/S15-011,"Looking Down on Koyomi, Mayoi Hachikuji",,,,,,,
-BM/S15-012,"Wandering Spirit, Mayoi Hachikuji",,,,,,,
+BM/S15-008,Enthusiastic Girl- Nadeko Sengoku,,,,,,,
+BM/S15-009,Wreck of a Former Vampire- Shinobu Oshino,,,,,,,
+BM/S15-010,Shy Girl- Nadeko Sengoku,,,,,,,
+BM/S15-011,Looking Down on Koyomi- Mayoi Hachikuji,,,,,,,
+BM/S15-012,Wandering Spirit- Mayoi Hachikuji,,,,,,,
 BM/S15-013,"""Not on Purpose"" Mayoi Hachikuji",,,,,,,
-BM/S15-014,"Human-looking Vampire, Shinobu Oshino",,,,,,,
-BM/S15-015,"Infatuation, Nadeko Sengoku",,,,,,,
-BM/S15-016,"Vampire-looking Human, Koyomi Araragi",,,,,,,
+BM/S15-014,Human-looking Vampire- Shinobu Oshino,,,,,,,
+BM/S15-015,Infatuation- Nadeko Sengoku,,,,,,,
+BM/S15-016,Vampire-looking Human- Koyomi Araragi,,,,,,,
 BM/S15-017,Shinobu Oshino,,,,,,,
-BM/S15-018,"Likes Donuts, Shinobu Oshino",,,,,,,
-BM/S15-019,"Hungry, Mayoi Hachikuji",,,,,,,
-BM/S15-020,"Self-proclaimed 500 Years Old, Shinobu Oshino",,,,,,,
+BM/S15-018,Likes Donuts- Shinobu Oshino,,,,,,,
+BM/S15-019,Hungry- Mayoi Hachikuji,,,,,,,
+BM/S15-020,Self-proclaimed 500 Years Old- Shinobu Oshino,,,,,,,
 BM/S15-021,Real Fight,,,,,,,
 BM/S15-022,Tongue Twister,,,,,,,
 BM/S15-023,Maintaining Existence,,,,,,,
 BM/S15-024,MAYOI Mai Mai,,,,,,,
 BM/S15-025,Cursed Girl,,,,,,,
-BM/S15-026,"Family Circumstances, Tsubasa Hanekawa",,,,,,,
+BM/S15-026,Family Circumstances- Tsubasa Hanekawa,,,,,,,
 BM/S15-027,,,,,,,,
 BM/S15-028,,,,,,,,
 BM/S15-029,,,,,,,,
@@ -103,22 +103,22 @@ BM/S15-097,,,,,,,,
 BM/S15-098,,,,,,,,
 BM/S15-099,,,,,,,,
 BM/S15-100,,,,,,,,
-BM/S15-101,"Motionless Silence, Koyomi Araragi",2KPOW,Self,ATK,0,0,RETURN2,0
+BM/S15-101,Motionless Silence- Koyomi Araragi,2KPOW,Self,ATK,0,0,RETURN2,0
 BM/S15-102,Highly Suspicious Hitagi Senjyogahara,FIVETWO,Strange,ATK,0,0,0,0
-BM/S15-103,"Daughter of a Proper Family, Senjyogahara Hitagi",RTRNWR,Strange,SUMMON,0,0,0,0
+BM/S15-103,Daughter of a Proper Family- Senjyogahara Hitagi,RTRNWR,Strange,SUMMON,0,0,0,0
 BM/S15-104,Weight Crab,TWOKONE,0,Climax,0,0,0,0
-BM/S15-105,"Ultimate Honor Student, Tsubasa Hanekawa",FIVEFRONT,500,CONT,0,0,0,0
+BM/S15-105,Ultimate Honor Student- Tsubasa Hanekawa,FIVEFRONT,500,CONT,0,0,0,0
 BM/S15-T01,Karen Araragi & Tsuhiki Araragi,RTRNWR,Strange,DEATH,0,0,2,0
 BM/S15-T02,Suruga Kanbaru in Regular Clothes,0,0,0,0,0,0,0
-BM/S15-T03,"Battle Ready, Hitagi Senjyogahara",SELFPOW,1000,Main,0,0,1,0
+BM/S15-T03,Battle Ready- Hitagi Senjyogahara,SELFPOW,1000,Main,0,0,1,0
 BM/S15-T04,Shy Mayoi Hachikuji,2KPOW,Any,OPPATK,FRNTATK,0,WRAND1,0
-BM/S15-T05,"Girl Who Lost All Weight, Hitagi Senjyogahara",0,0,0,0,0,0,0
+BM/S15-T05,Girl Who Lost All Weight- Hitagi Senjyogahara,0,0,0,0,0,0,0
 BM/S15-T06,Hitagi Senjyogahara in Regular Clothes,SELFPOW,1000,ATK,CHARATK,Strange,0,0
-BM/S15-T07,"Elementary Student, Mayoi Hachikuji",SELFPOW,1000,CONT,ONSTAGE2,Strange,0,0
-BM/S15-T08,"Loves BL, Suruga Kanbaru",CHARENC,0,ENCORE,RVRS,SELF,WR,Char
+BM/S15-T07,Elementary Student- Mayoi Hachikuji,SELFPOW,1000,CONT,ONSTAGE2,Strange,0,0
+BM/S15-T08,Loves BL- Suruga Kanbaru,CHARENC,0,ENCORE,RVRS,SELF,WR,Char
 BM/S15-T09,HITAGI Crab,ONEKONE,0,Climax,0,0,0,0
-BM/S15-T10,"Curse-lifting Ritual, Nadeko Sengoku",SELFPOW,1000,OPPATK,0,0,0,0
+BM/S15-T10,Curse-lifting Ritual- Nadeko Sengoku,SELFPOW,1000,OPPATK,0,0,0,0
 BM/S15-T11,Tsubasa Hanekawa in Pajamas,XPOWSELF500,Strange,SUMMON,0,0,0,0
-BM/S15-T12,"Cat Ears, Tsubasa Hanekawa",0,0,0,0,0,0,0
-BM/S15-T13,"Maturing Girl, Nadeko Sengoku",0,0,0,0,0,0,0
+BM/S15-T12,Cat Ears- Tsubasa Hanekawa,0,0,0,0,0,0,0
+BM/S15-T13,Maturing Girl- Nadeko Sengoku,0,0,0,0,0,0,0
 BM/S15-T14,Everything About Me,SOULALL,2,Climax,0,0,0,0
