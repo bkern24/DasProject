@@ -105,15 +105,15 @@
             Dim value
             Do Until ptr >  UBound(obj)
                 
-                If StrComp(CStr(obj(ptr)),"Card Name",1) = 0 Then
+                If StrComp(CStr(obj(ptr)),"CardName",1) = 0 Then
                             
                     value = 60
 
-                ElseIf StrComp(CStr(obj(ptr)),"Attribute 1",1) = 0 Then
+                ElseIf StrComp(CStr(obj(ptr)),"Attribute1",1) = 0 Then
 
                     value = 35
 
-                ElseIf StrComp(CStr(obj(ptr)),"Attribute 2",1) = 0 Then
+                ElseIf StrComp(CStr(obj(ptr)),"Attribute2",1) = 0 Then
 
                     value = 35
                 
@@ -121,7 +121,7 @@
 
                     value = 60
 
-                ElseIf StrComp(CStr(obj(ptr)),"Flavour Text",1) = 0 Then
+                ElseIf StrComp(CStr(obj(ptr)),"FlavourText",1) = 0 Then
 
                     value = 255
 
